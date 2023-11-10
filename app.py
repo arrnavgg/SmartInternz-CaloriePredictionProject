@@ -1,95 +1,116 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+# app.py
+
+from flask import Flask, render_template
 import sqlite3
-import os
+import plotly.graph_objs as go
+import plotly.offline as opy
 
 app = Flask(__name__)
-app.config['DATABASE'] = 'Calorie.db'
-app.secret_key = 'TH15_1S_@_S3CR3T_K3Y'
+
+def fetch_user_name(userid):
+    conn = sqlite3.connect('Calorie.db')
+    cursor = conn.cursor()
+
+    user_query = "SELECT name FROM users WHERE userid = ?"
+    cursor.execute(user_query, (userid,))
+    user_data = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return user_data[0] if user_data else None
+
+# Function to query data from the SQLite database
+def fetch_data(userid):
+    conn = sqlite3.connect('Calorie.db')
+    cursor = conn.cursor()
+
+    # Example query: Retrieve total quantity sold for each product
+    query = "SELECT exercise_name, duration FROM exercise WHERE userid = ?"
+    cursor.execute(query, (userid,))
+    data = cursor.fetchall()
+
+    # Example query: Retrieve total quantity sold over time
+    time_query = "SELECT date, calories FROM exercise WHERE userid = ?"
+    cursor.execute(time_query, (userid,))
+    time_data = cursor.fetchall()
+
+    calories_query = "SELECT exercise_name, calories FROM exercise WHERE userid = ?"
+    cursor.execute(calories_query, (userid,))
+    calories_data = cursor.fetchall()
+
+    heart_query = "SELECT bpm, calories FROM exercise WHERE userid = ?"
+    cursor.execute(heart_query, (userid,))
+    heart_data = cursor.fetchall()
 
 
-@app.route('/login',methods=("GET","POST"))
-def login():
-    if request.method=="POST":
-        login_id=request.form['userid']
-        passwd = request.form['password']
-        login_conn = sqlite3.connect(app.config['DATABASE'])
-        cur=login_conn.cursor()
-        cur.execute('SELECT password,code FROM users WHERE username = ? password = ?', (login_id,passwd))
-        result = cur.fetchone()
-        login_conn.close()
-        if result:
-            print(result)
-            session['userid'] = request.form['userid']
-            session['name'] = request.form['name']
-            session['age'] = request.form['age']
-            session['height'] = request.form['height']
-            session['gender'] = request.form['gender']
-            return redirect(url_for('home'))
-        else:
-            print("Wrong")
-            return render_template('login.html',message="Wrong Id or Password")
+    cursor.close()
+    conn.close()
 
-    return render_template('login.html')
-
-@app.route('/register.html',methods=("GET","POST"))
-def register():
-    if request.method=="POST":
-        user_id=request.form['userid']
-        passwd = request.form['password']
-        name = request.form['name']
-        age = request.form['age']
-        height = request.form['height']
-        gender = request.form['gender']
-
-        register_conn = sqlite3.connect(app.config['DATABASE'])
-        register_cur=register_conn.cursor()
-        register_cur.execute('SELECT userid FROM users WHERE userid = ?', (user_id,))
-        result = register_cur.fetchone()
-        if result:
-            return render_template('register.html',message="User already exists")
-        else:
-            register_cur.execute('insert into users values(?,?,?,?,?)',(user_id,passwd,name,age,height,gender))
-            register_conn.commit()
-            session['userid'] = request.form['userid']
-            session['name'] = request.form['name']
-            session['age'] = request.form['age']
-            session['height'] = request.form['height']
-            session['gender'] = request.form['gender']
-            return redirect(url_for('home'))
-        
-@app.route('/home.html',methods=("GET","POST"))
-def home():
-    if request.method=="POST":
-        gender_text=request.form['gender']
-        Gender = 0 if gender_text=='Male' else 1
-        Age = float(request.form['age'])
-        Height = float(request.form['height'])
-        Duration=float(request.form['duration'])
-        Heart_Rate = float(request.form['heart_rate'])
-        Body_Temp = float(request.form['temperature'])
-        date=os.date.today()
-        model=load_model('model.h5')
-        result = model.predict([[Gender,Age,Height,Duration,Heart_Rate,Body_Temp]])
-        session['calories'] = result
-        exercise_conn = sqlite3.connect(app.config['DATABASE'])
-        exercise_cur=exercise_conn.cursor()
-        exercise_cur.execute('insert into exercise(exercise_name,userid,duration,date,bpm,temperature,calories) values(?,?,?,?,?,?,?)',(request.form['exercise'],session['userid'],Duration,date,Heart_Rate,Body_Temp,result))
-        return render_template('home.html',calories = result)
-        
-
-    return render_template('home.html',name = session['name'], age = session['age'], height = session['height'], gender = session['gender'])
-
-@app.route('/dashboard.html',methods=("GET","POST"))
-def dashboard():
-    pass
+    return data, time_data, calories_data, heart_data
 
 
-# Afterwards can just redirect it to the login page directly, or can display a
-# Homepage with dev info/project info and login button.
+# Function to create a Plotly bar chart
+def create_bar_chart(data):
+    exercise, duration = zip(*data)
 
-@app.route('/')
-def method_name():
-    return "HELLO WORLD!"
+    trace = go.Bar(x=exercise, y=duration)
+    layout = go.Layout(title='Exercise vs duration', xaxis=dict(title='Exercise'), yaxis=dict(title='Duration'))
+    fig = go.Figure(data=[trace], layout=layout)
+
+    return opy.plot(fig, auto_open=False, output_type='div')
+
+
+def create_line_chart(time_data):
+    date, calories = zip(*time_data)
+
+    trace = go.Scatter(x=date, y=calories, mode='lines+markers', marker=dict(size=10), line=dict(width=2))
+    layout = go.Layout(title='Total Calories Over Time', xaxis=dict(title='Date'), yaxis=dict(title='Total Calories'))
+    fig = go.Figure(data=[trace], layout=layout)
+
+    return opy.plot(fig, auto_open=False, output_type='div') 
+
+def create_pie_chart(data, title):
+    exercise_names, calories = zip(*data)
+
+    trace = go.Pie(labels=exercise_names, values=calories)
+    layout = go.Layout(title=title)
+    fig = go.Figure(data=[trace], layout=layout)
+
+    return opy.plot(fig, auto_open=False, output_type='div')
+
+def create_heart_rate_scatter_plot(data):
+    bpm, calories = zip(*data)
+
+    trace = go.Scatter(x=bpm, y=calories, mode='markers', marker=dict(size=12))
+    layout = go.Layout(title='Heart Rate vs. Calories Burned', xaxis=dict(title='Heart Rate (BPM)'), yaxis=dict(title='Calories Burned'))
+    fig = go.Figure(data=[trace], layout=layout)
+
+    return opy.plot(fig, auto_open=False, output_type='div')
+
+
+@app.route('/<int:userid>')
+def user_dashboard(userid):
+    user_name = fetch_user_name(userid)
+
+    if user_name:
+        exercise_data, time_data, calories_data, heart_data = fetch_data(userid)
+
+        bar_chart = create_bar_chart(exercise_data)
+        line_chart = create_line_chart(time_data)
+        pie_chart = create_pie_chart(calories_data, title='Exercise Distribution and Calories Burned')
+        scatter_plot = create_heart_rate_scatter_plot(heart_data)
+
+
+        return render_template('user_dashboard.html',
+                               username=user_name,
+                               bar_chart=bar_chart,
+                               line_chart=line_chart,
+                               pie_chart=pie_chart,
+                               scatter_plot=scatter_plot
+                            )
+    else:   
+        return "User not found"
 
 if __name__ == '__main__':
     app.run(debug=True)
