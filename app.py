@@ -1,102 +1,50 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-import sqlite3
-import os
+from flask import Flask,redirect,url_for,render_template,request
+import pickle 
+import numpy as np
 
-app = Flask(__name__)
-app.config['DATABASE'] = 'Calorie.db'
-app.secret_key = 'TH15_1S_@_S3CR3T_K3Y'
+model=pickle.load(open('tr_model.sav','rb'))
 
-
-@app.route('/')
-def main():
-    return render_template('index.html')
-
-@app.route('/login.html',methods=("GET","POST"))
-def login():
-    if request.method=="POST":
-        login_id=request.form['userid']
-        passwd = request.form['password']
-        login_conn = sqlite3.connect(app.config['DATABASE'])
-        cur=login_conn.cursor()
-        cur.execute('SELECT name,age,height,gender FROM users WHERE userid = ? AND password = ?', (login_id,passwd))
-        result = cur.fetchone()
-        login_conn.close()
-        if result:
-            print(result)
-            session['userid'] = request.form['userid']
-            session['name'] = result[0]
-            session['age'] = result[1]
-            session['height'] = result[2]
-            session['gender'] = result[3]
-            return redirect(url_for('home'))
-        else:
-            print("Wrong")
-            return render_template('login.html',message="Wrong Id or Password")
-
-    return render_template('login.html')
-
-@app.route('/register.html',methods=("GET","POST"))
-def register():
-    if request.method=="POST":
-        user_id=request.form['userid']
-        passwd = request.form['password']
-        name = request.form['name']
-        age = request.form['age']
-        height = request.form['height']
-        gender = request.form['gender']
-
-        register_conn = sqlite3.connect(app.config['DATABASE'])
-        register_cur=register_conn.cursor()
-        register_cur.execute('SELECT userid FROM users WHERE userid = ?', (user_id,))
-        result = register_cur.fetchone()
-        if result:
-            register_conn.close()
-            return render_template('register.html',message="User already exists")
-        else:
-            register_cur.execute('insert into users values(?,?,?,?,?,?)',(user_id,passwd,name,age,height,gender))
-            register_conn.commit()
-            register_conn.close()
-            session['userid'] = request.form['userid']
-            session['name'] = request.form['name']
-            session['age'] = request.form['age']
-            session['height'] = request.form['height']
-            session['gender'] = request.form['gender']
-            return redirect(url_for('home'))
-    return render_template('register.html')
-        
-@app.route('/home.html',methods=("GET","POST"))
-def home():
-    if request.method=="POST":
-        gender_text=request.form['gender']
-        Gender = 0 if gender_text=='Male' else 1
-        Age = float(request.form['age'])
-        Height = float(request.form['height'])
-        Duration=float(request.form['duration'])
-        Heart_Rate = float(request.form['heart_rate'])
-        Body_Temp = float(request.form['temperature'])
-        date=os.date.today()
-        model=load_model('model.h5')
-        result = model.predict([[Gender,Age,Height,Duration,Heart_Rate,Body_Temp]])
-        session['calories'] = result
-        exercise_conn = sqlite3.connect(app.config['DATABASE'])
-        exercise_cur=exercise_conn.cursor()
-        exercise_cur.execute('insert into exercise(exercise_name,userid,duration,date,bpm,temperature,calories) values(?,?,?,?,?,?,?)',(request.form['exercise'],session['userid'],Duration,date,Heart_Rate,Body_Temp,result))
-        return render_template('home.html',calories = result)
-        
-
-    return render_template('home.html',name = session['name'], age = session['age'], height = session['height'], gender = session['gender'])
-
-@app.route('/dashboard.html',methods=("GET","POST"))
-def dashboard():
-    pass
-
-
-# Afterwards can just redirect it to the login page directly, or can display a
-# Homepage with dev info/project info and login button.
+app=Flask(__name__)
 
 @app.route('/')
-def method_name():
-    return "HELLO WORLD!"
+def welcome():
+    return render_template('manual.html')
 
-if __name__ == '__main__':
+@app.route('/submit',methods=['POST','GET'])
+def submit():
+    if request.method=='POST':
+        gender=int(request.form['gender'])
+        age=int(request.form['age'])
+        height=float(request.form['height'])
+        exercise_duration=float(request.form['execise_duration'])
+        heart_rate=float(request.form['heart_rate'])
+        body_temp=float(request.form['body_temp'])
+        print("gender is ",gender)
+        print("age is ",age)
+        print("height is ",height)
+        print("exercise duration is ",exercise_duration)
+        print("heart rate is ",heart_rate)
+        print("body temp is ",body_temp)
+        input_df= np.array([gender,age,height,exercise_duration,heart_rate,body_temp])
+        input_df=input_df.reshape(1,-1)
+        result=model.predict(input_df)
+        return render_template('output.html',result=result)
+
+"""@app.route('/send',methods=['POST','GET'])
+def send():
+    if request.method=='POST':
+        first_name=request.form['first_name']
+        last_name=request.form['last_name']
+        email=request.form['email']
+        mobile_no=request.form['mobile_no']
+        query=request.form['query']
+        print("first name is : ",first_name)
+        print("last name is :",last_name)
+        print("email of user is :",email)
+        print("mobile no is :",mobile_no)
+        print("query is :",query)
+        return render_template('index.html',**locals())
+"""
+    
+if __name__=='__main__':
     app.run(debug=True)
