@@ -10,9 +10,20 @@
                 <button type="submit">Login</button>
             </form>
             
-            <!-- If wanna implement a locking system so when user clicks on register, the register form unlocks:  -->
-            <!-- <button class="new-user" type="button" onclick="toggleForm('register')">New User ? Register</button> -->
-
+        
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-container">
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}
+                            <button class="close-button" onclick="this.parentElement.style.display='none';">×</button>
+                        </li>
+                            {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% endwith %}
 
         </div>
         <div id="register-form" class="lr-form">

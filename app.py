@@ -30,9 +30,9 @@ def prediction(req):
 def main():
     if request.method=="POST":
         result=prediction(request.form)
-        return render_template('index.html',calories = result)
+        return render_template('index.html',calories = result, show_section=True)
         
-    return render_template('index.html')
+    return render_template('index.html', show_section=False)
 
 @app.route('/login.html',methods=("GET","POST"))
 def login():
@@ -141,4 +141,5 @@ def method_name():
     return "HELLO WORLD!"
 
 if __name__ == '__main__':
-    app.run()
+    #app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True)

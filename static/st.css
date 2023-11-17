@@ -8,7 +8,7 @@
   font-family: 'Poppins',sans-serif;
 }
 body{
-  background-color: rgb(7, 7, 27);
+  background-color: rgb(0, 0, 0);
   color: #ffffff;
 }
 .header{
@@ -17,7 +17,8 @@ body{
   left: 0;
   width: 100%;
   padding:20px 10%;
-  background-color: rgb(7, 7, 27);
+  background-color: rgba(0, 0, 0, 0.6);
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,13 +27,13 @@ body{
 }
 .logo{
   font-size: 25px;
-  color: #ededed;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
 }
 .navbar a{
   font-size: 18px;
-  color: #ededed;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 500;
   margin-left: 35px;
@@ -40,7 +41,7 @@ body{
 
 }
 .navbar a:hover{
-  color: #00abf0;
+  color: #f08000;
 }
 .log{
   border-radius: 50%; 
@@ -56,44 +57,50 @@ body{
   display: flex;
   align-items: center;
   padding :0 10%;
+  justify-content: center;
 }
 .form{
-  max-width: 600px;
+  max-width: 900px;
 
 }
 .form h1{
+  text-align: center;
   font-size: 56px;
   font-weight: 720;
   line-height: 1.2;
 }
 .form h3{
+  text-align: center;
   font-size: 32px;
   font-weight: 700;
-  color: #00abf0;
+  color: rgb(243, 85, 12);
 }
 .form p{
-  font-size: 15px;
+  font-size: 17px;
   margin:20px 0 40px;
 }
 .form .btn-box{
   display: flex;
-  justify-content: space-between;
-  width:345px;
-  height: 50px;
+  justify-content: space-evenly;
+  width:100%;
+  height: 45px;
+  padding-left:40px ;
+  padding-right: 40px;
 
 }
 .btn-box a{
   position: relative;
+  border-radius: 5px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   width: 150px;
   height: 100%;
-  background-color: #00abf0;
-  border:2px solid #00abf0;
+  background-color: rgb(243, 85, 12);
+  border:2px solid rgb(243, 85, 12);
   border-radius: 8px;
   font-size: 19px;
-  color:#081b29;
+  color:#ffffff;
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 1px;
@@ -103,19 +110,20 @@ body{
 }
 .btn-box a:nth-child(2){
   background: transparent;
-  color: #00abf0;
+  color: rgb(255, 255, 255);
 }
 
 .btn-box a:hover{
-  color: #00abf0;
+  color: rgb(243, 85, 12);
 }
 
 .btn-box a:nth-child(2):hover{
-  color: #081b29;
+  color: rgb(243, 85, 12);
 }
 
 .btn-box a:nth-child(2)::before{
-  background: #073763;
+  background: #ffffff;
+  color: rgb(243, 85, 12);
 }
 
 .btn-box a::before{
@@ -125,9 +133,10 @@ body{
   left: 0;
   width: 0;
   height: 100%;
-  background: #073763;
+  background: #ffffff;
   z-index: -1;
   transition: 0.5s;
+  
 }
 .btn-box a:hover::before{
   width: 100%;
@@ -160,9 +169,15 @@ body{
   padding: 20px;
 
 }
+.leader .submit-btn{
+  justify-content: center;
+  padding-left: 40%;
+  padding-top: 1%;
+  border-radius: 4px;
+}
 .leader h2{
   width:100%;
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 50px;
   text-align: center;
   margin-bottom: 10px;
@@ -185,7 +200,7 @@ body{
   position: relative;
   width: 100%;
   height: 40px;
-  color: #00abf0;
+  color: white;
 }
 
 .leader .row100 .inputbox input,
@@ -248,7 +263,7 @@ body{
   display: block;
   width: 100%;
   height: 2px;
-  background: #45f3ff;
+  background: white;
   transition: 0.5s;
   border-radius: 2px;
   pointer-events: none;
@@ -290,8 +305,8 @@ input[type="submit"]
   padding: 7px 35px;
   cursor: pointer;
   outline: none;
-  background : #45f3ff;
-  color: #000;
+  background : rgb(243, 85, 12);
+  color: #ffffff;
   font-size: 18px;
   border-radius: 2px;
 }
@@ -324,11 +339,11 @@ input[type="submit"]
   text-align: center;
   font-size: 32px;
   font-weight: 700;
-  color: rgb(243, 85, 12);
+  color: rgb(255, 255, 255);
 }
 
 .form1 p {
-  font-size: 18px;
+  font-size: 17px;
   margin: 10px 0 40px;
   line-height: 1.6; 
 }
@@ -355,15 +370,14 @@ input[type="submit"]
 
 
 #login-reg-form{
-  margin:calc(50vh - 200px) auto;
+  margin:calc(60vh - 190px) auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .lr-form{
-  width: 40%;
-  padding: 20px;
+  width: 45%;
   text-align: center;
 }
 
@@ -385,11 +399,11 @@ input[type="submit"]
   margin-top: 20px;
   width: 150px;
   height: 100%;
-  background-color: #00abf0;
-  border:2px solid #00abf0;
+  background-color: rgb(243, 85, 12);
+  border:2px solid rgb(243, 85, 12);
   border-radius: 3px;
   font-size: 19px;
-  color:#081b29;
+  color:#ffffff;
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 1px;
@@ -398,10 +412,50 @@ input[type="submit"]
   transition: 0.5s;
 }
 
+.lr-form button[type="submit"]:hover {
+  background-color: #ffffff;
+  color: rgb(243, 85, 12);
+}
+
+.lr-form button[type="submit"]:hover::before {
+  background: #ffffff;
+  color: rgb(243, 85, 12);
+}
+
 .new-user{
   all: unset;
   font-size: 0.8em;
   margin-top: 10px;
   cursor: pointer;
   margin-left: 80%;
+}
+
+
+.lr-form .flash-container{
+  position: fixed;
+  margin-top: 60px;
+  width: 100%;
+  justify-content: left;
+  text-align: left;
+  border-radius: 9px;
+  left:1px;
+  z-index: 100;
+  margin-right: 0;
+  position: fixed;    
+  right:2px;
+      
+      
+      
+      
+    
+}
+
+
+.close-button {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  float: right;
 }

@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="home">
-      <div class="form">
-        <h1>Calpred</h1>
-        <h3>Calorie burnt predictor</h3>
-        <p>  
-            Calorie burnt prediction using machine learning involves employing algorithms to estimate the amount of calories an individual expends during a specific activity or period. This process leverages data inputs such as heart rate, duration, and potentially other biometric factors. By training models on large datasets, the algorithm learns to make accurate predictions. This technology holds great potential for personalized fitness tracking, allowing users to monitor and optimize their energy expenditure for better health and fitness outcomes. It enables individuals to make informed decisions about their physical activity levels and dietary choices, contributing to a more balanced and healthy lifestyle.
-        </p>
+
+<section class="home">
+  <div class="form">
+    
+    <h1>IgniFit    </h1>
+    <h3>Calorie Burnt predictor</h3>
+    <p>
+      Predicting calorie burn through machine learning involves utilizing sophisticated algorithms to estimate the energy expenditure of an individual during a specific activity or timeframe. This intricate process relies on diverse data inputs, such as heart rate, duration, and potentially other biometric factors. Through the training of models on extensive datasets, the algorithm attains proficiency in making precise predictions. This cutting-edge technology holds immense promise for personalized fitness monitoring, empowering users to scrutinize and optimize their energy output for enhanced health and fitness results. It facilitates individuals in making well-informed decisions regarding their physical activity levels and dietary selections, fostering a more well-rounded and health-conscious lifestyle.
+    </p>
         <div class="btn-box">
           <a href="{{ url_for ('login') }}">Login</a>
-          <a href="#section1">Guest User</a>
+          <a href="#section1">Guest login</a>
           
         </div>
       </div>
     </section>
+    
 
     {% include 'calorie_form.html' %}
     {% if calories %}
       <h2 style="text-align: center;">Calories Burnt: {{ calories }}</h2>
     {% endif %}
+    
     <section class="home1">
       <div id="section2" class="leader">
         <h2>Contact Us</h2>
@@ -69,7 +73,9 @@
           
           <div class="row100">
             <div class="col">
-              <input type="submit" value="send">
+              <div class="submit-btn">
+                <input type="submit" value="send">
+              </div>
             </div>
           </div>
         </form>
@@ -79,11 +85,11 @@
       <div id="section3" class = form1>
         <h1>How it works</h1>
         <p>  
-          Welcome to our personalized fitness experience! When you sign up or use our platform as a guest, we collect essential details to understand your body and fitness level. Our platform utilizes a state-of-the-art machine learning algorithm to process the data you provide.<br> This algorithm has been trained on a diverse set of inputs to accurately predict the calories burned during various workout activities.Based on your profile and the specifics of your workout, our system calculates the estimated number of calories you burn. This personalized analysis takes into account your unique attributes, ensuring a more accurate result compared to generic calculators.<br><br>Don't want to create an account? No problem! You can still benefit from our platform as a guest. Enter your workout details, and our system will generate a calorie estimate without requiring any personal information.
+          Welcome to our unique fitness experience! Whether you decide to create an account or explore our platform anonymously, we gather essential data to understand your body and fitness status. Utilizing an advanced machine learning algorithm, our platform processes the information you provide.<br>This algorithm has undergone extensive training on a diverse range of inputs to accurately predict the calories expended during various workout activities. Tailored to your profile and workout specifics, our system calculates the approximate number of calories burned. This personalized analysis considers your distinctive attributes, ensuring a more precise outcome compared to generic calculators.<br>Prefer not to register? No problem! You can still benefit from our platform as a guest. Simply input your workout details, and our system will generate a calorie estimate without requiring any personal information. Your privacy is paramount as our platform seamlessly adapts to your preferences.
         </p>
         <div class="btn-box"> 
           <a href="#section3">Get the Code</a>
         </div>
       </div>
     </section>
-{% endblock %}
+    {% endblock %}
