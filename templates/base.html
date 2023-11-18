@@ -5,32 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CalPred</title>
   <link rel="stylesheet" href="/static/st.css">
-  <style>
-    /* Add this style for Flask flash messages */
-    .flash-container {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-       /* Adjust width as needed */
-      
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      
-    }
-
-    .flashes {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .flashes li {
-      padding: 10px;
-      margin-bottom: 10px;
-      background-color: #e40808; /* Adjust background color */
-      color: white;
-      border-radius: 5px;
-    }
-  </style>
   {% block styles %}{% endblock %}
 </head>
 <body>
@@ -39,8 +13,8 @@
       <nav class="navbar">
         <a href="{{ url_for('main') }}">Home</a>
         <a href="https://drive.google.com/file/d/1ZrZzAr6-9rglOji6B6J3TyV06gfXxJtU/view?usp=sharing" target="_blank">About us</a>
-        <a href="#section3">How it works</a>
-        <a href="#section2">Contact us</a>
+        <a href="#section-howitworks">How it works</a>
+        <a href="#section-contactus">Contact us</a>
         {% block dashpred %}{% endblock %}
       </nav>
 

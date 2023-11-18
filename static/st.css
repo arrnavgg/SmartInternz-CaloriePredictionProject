@@ -59,27 +59,27 @@ body{
   padding :0 10%;
   justify-content: center;
 }
-.form{
+.homedes{
   max-width: 900px;
 
 }
-.form h1{
+.homedes h1{
   text-align: center;
   font-size: 56px;
   font-weight: 720;
   line-height: 1.2;
 }
-.form h3{
+.homedes h3{
   text-align: center;
   font-size: 32px;
   font-weight: 700;
   color: rgb(243, 85, 12);
 }
-.form p{
+.homedes p{
   font-size: 17px;
   margin:20px 0 40px;
 }
-.form .btn-box{
+.homedes .btn-box{
   display: flex;
   justify-content: space-evenly;
   width:100%;
@@ -175,20 +175,20 @@ body{
   padding-top: 1%;
   border-radius: 4px;
 }
-.leader h2{
+.leader h1{
   width:100%;
   color: rgb(255, 255, 255);
   font-size: 50px;
   text-align: center;
   margin-bottom: 10px;
 }
-.leader .row100{
+.leader .rowline{
   position: relative;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
 }
-.leader .row100 .col
+.leader .rowline .inputcol
 {
    position: relative;
    width: 100%;
@@ -196,15 +196,15 @@ body{
    margin: 30px 0 10px;
    transition:0.5s;
 }
-.leader .row100 .inputbox{
+.leader .rowline .inputfield{
   position: relative;
   width: 100%;
   height: 40px;
   color: white;
 }
 
-.leader .row100 .inputbox input,
-.leader .row100 .inputbox.textarea textarea
+.leader .rowline .inputfield input,
+.leader .rowline .inputfield.textarea textarea
 {
   position: absolute;
   width: 100%;
@@ -220,7 +220,7 @@ body{
 
 
 
-.leader .row100 .inputbox .number{
+.leader .rowline .inputfield .number{
   position: absolute;
   top: 0;
   left: 0;
@@ -232,7 +232,7 @@ body{
   pointer-events: none;
 }
 
-.leader .row100 .inputbox .text{
+.leader .rowline .inputfield .text{
   position: absolute;
   top: 0;
   left: 0;
@@ -244,19 +244,19 @@ body{
   pointer-events: none;
 }
 
-.leader .row100 .inputbox input:focus + .number,
-.leader .row100 .inputbox input:valid + .number{
+.leader .rowline .inputfield input:focus + .number,
+.leader .rowline .inputfield input:valid + .number{
   top: -34px;
   left: -10px;
 }
 
-.leader .row100 .inputbox input:focus+ .text,
-.leader .row100 .inputbox input:valid+ .text{
+.leader .rowline .inputfield input:focus+ .text,
+.leader .rowline .inputfield input:valid+ .text{
   top: -34px;
   left: -10px;
 }
 
-.leader .row100 .inputbox .line
+.leader .rowline .inputfield .line
 {
   position: absolute;
   bottom: 0;
@@ -269,12 +269,12 @@ body{
   pointer-events: none;
 }
 
-.leader .row100 .inputbox input:focus~ .line,
-.leader .row100 .inputbox input:valid~ .line{
+.leader .rowline .inputfield input:focus~ .line,
+.leader .rowline .inputfield input:valid~ .line{
   height: 100%;
 }
 
-.leader .row100 .inputbox.textarea
+.leader .rowline .inputfield.textarea
 {
   position: relative;
   width: 100%;
@@ -282,20 +282,53 @@ body{
   padding: 10px 0;
 }
 
-.leader .row100 .inputbox.textarea textarea
+.leader .rowline .inputfield.textarea textarea
 {
   height: 100%;
   resize: none;
 }
 
-.leader .row100 .inputbox textarea:focus+ .text,
-.leader .row100 .inputbox textarea:valid+ .text{
+.leader .rowline .inputfield textarea:focus+ .text,
+.leader .rowline .inputfield textarea:valid+ .text{
   top: -34px;
   left: -10px;
 }
 
-.leader .row100 .inputbox textarea:focus~ .line,
-.leader .row100 .inputbox textarea:valid~ .line{
+.leader .rowline .inputfield textarea:focus~ .line,
+.leader .rowline .inputfield
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+textarea:valid~ .line{
   height: 100%;
 }
 
@@ -320,14 +353,14 @@ input[type="submit"]
   height: 100vh;
 }
 
-.form1 {
+.homedes2 {
   
   padding-left: 190px;
   padding-right: 190px;
 
 }
 
-.form1 h1 {
+.homedes2 h1 {
   text-align: center;
   font-size: 56px;
   font-weight: 720;
@@ -335,25 +368,25 @@ input[type="submit"]
   color: #ffffff;
 }
 
-.form1 h3 {
+.homedes2 h3 {
   text-align: center;
   font-size: 32px;
   font-weight: 700;
   color: rgb(255, 255, 255);
 }
 
-.form1 p {
+.homedes2 p {
   font-size: 17px;
   margin: 10px 0 40px;
   line-height: 1.6; 
 }
 
-.form1 .btn-box {
+.homedes2 .btn-box {
   display: flex;
   justify-content: center;
 }
 
-.form1 .btn-box a {
+.homedes2 .btn-box a {
   font-size: 20px;
   display: flex;
   justify-content: center;
@@ -458,4 +491,36 @@ input[type="submit"]
   cursor: pointer;
   font-size: 14px;
   float: right;
+}
+
+
+
+
+
+
+
+
+
+.flash-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+   /* Adjust width as needed */
+  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+.flashes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flashes li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e40808; /* Adjust background color */
+  color: white;
+  border-radius: 5px;
 }

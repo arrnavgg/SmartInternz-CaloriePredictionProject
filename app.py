@@ -18,7 +18,7 @@ def prediction(req):
     Heart_Rate = float(req['heart_rate'])
     Body_Temp = float(req['temperature'])
 
-    model=pickle.load(open('final_model.pkl','rb'))
+    model=pickle.load(open('ML/tr_model .sav','rb'))
 
     data=[[Gender,Age,Height,Duration,Heart_Rate,Body_Temp]]
     print(data)
